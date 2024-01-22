@@ -29,12 +29,14 @@ async function buildHTML(source, target) {
   });
   for (const component of components) {
     const name = component.split('.')[0];
+    const regex = new RegExp('{{' + name + '}}', 'gi');
     while (htmlTemplate.includes(`{{${name}}}`)) {
       const componentPath = path.join(__dirname, 'components', `${name}.html`);
       const content = await fs.readFile(componentPath, {
         encoding: 'utf-8',
       });
-      htmlTemplate = htmlTemplate.split(`{{${name}}}`).join(content);
+      //htmlTemplate = htmlTemplate.split(`{{${name}}}`).join(content);
+      htmlTemplate = htmlTemplate.replace(regex, content);
     }
   }
   await fs.writeFile(target, htmlTemplate);
