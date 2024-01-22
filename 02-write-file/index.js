@@ -19,8 +19,9 @@ stream.on('open', () => {
           process.exit();
         }
       });
+    } else {
+      fs.appendFile(filePath, data, { encoding: 'utf-8' }, () => {});
     }
-    fs.appendFile(filePath, data, { encoding: 'utf-8' }, () => {});
   });
 
   rl.on('SIGINT', () => {
