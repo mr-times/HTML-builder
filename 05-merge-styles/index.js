@@ -1,7 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { readdir } = require('node:fs/promises');
-const { pipeline } = require('node:stream/promises');
 
 const destPath = path.join(__dirname, 'project-dist', 'bundle.css');
 const srcPath = path.join(__dirname, 'styles');
@@ -10,7 +9,6 @@ async function mergeFiles(src, dst) {
   fs.writeFile(destPath, '', () => {});
   const files = await readdir(src, { withFileTypes: true });
   for (const file of files) {
-    console.log(path.extname(path.join(src, file.name)));
     if (file.isFile() && path.extname(path.join(src, file.name)) === '.css') {
       fs.createReadStream(path.join(src, file.name), { encoding: 'utf-8' }).on(
         'data',
