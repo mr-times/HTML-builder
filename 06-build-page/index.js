@@ -6,7 +6,7 @@ const dirDist = path.join(__dirname, 'project-dist');
 async function main() {
   await fs.mkdir(dirDist, { recursive: true });
 
-  await name(
+  await buildHTML(
     path.join(__dirname, 'template.html'),
     path.join(dirDist, 'index.html'),
   );
@@ -22,12 +22,11 @@ async function main() {
   );
 }
 
-async function name(source, target) {
+async function buildHTML(source, target) {
   const components = await fs.readdir(path.join(__dirname, 'components'));
   let htmlTemplate = await fs.readFile(source, {
     encoding: 'utf-8',
   });
-  console.log(components);
   for (const component of components) {
     const name = component.split('.')[0];
     while (htmlTemplate.includes(`{{${name}}}`)) {
@@ -68,8 +67,6 @@ async function copyFolderRecursive(source, target) {
       await copyFolderRecursive(sourcePath, targetPath);
     }
   }
-
-  console.log(`Dir: ${source} ---------> ${target}`);
 }
 
 main();
