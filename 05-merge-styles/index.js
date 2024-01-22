@@ -6,7 +6,7 @@ const destPath = path.join(__dirname, 'project-dist', 'bundle.css');
 const srcPath = path.join(__dirname, 'styles');
 
 async function mergeFiles(src, dst) {
-  fs.writeFile(destPath, '', () => {});
+  fs.writeFile(dst, '', () => {});
   const files = await readdir(src, { withFileTypes: true });
   for (const file of files) {
     if (file.isFile() && path.extname(path.join(src, file.name)) === '.css') {
