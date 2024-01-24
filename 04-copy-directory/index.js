@@ -19,6 +19,8 @@ async function copyFiles(src, dst) {
   }
 }
 
-fs.mkdir(dirNew, { recursive: true }, () => {
-  copyFiles(dirSrc, dirNew);
+fs.rm(dirNew, { recursive: true, force: true }, () => {
+  fs.mkdir(dirNew, { recursive: true }, () => {
+    copyFiles(dirSrc, dirNew);
+  });
 });
