@@ -14,22 +14,18 @@ stream.on('open', () => {
   rl.setPrompt('Введите сообщение:');
   rl.prompt();
   rl.on('line', (data) => {
+    fs.appendFile(filePath, data, { encoding: 'utf-8' }, () => {});
     if (data === 'exit') {
-      rl.question('Сохранить файл? (y or n)? ', (input) => {
-        if (input.match(/^y(es)?$/i)) {
-          process.exit();
-        }
-      });
-    } else {
-      fs.appendFile(filePath, data, { encoding: 'utf-8' }, () => {});
+      rl.setPrompt('Выход');
+      rl.prompt();
+      process.exit();
     }
   });
 
   rl.on('SIGINT', () => {
-    rl.question('Сохранить файл? (y or n)? ', (input) => {
-      if (input.match(/^y(es)?$/i)) {
-        process.exit();
-      }
-    });
+    rl.clearLine();
+    rl.setPrompt('Выход');
+    rl.prompt();
+    process.exit();
   });
 });
